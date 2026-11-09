@@ -382,3 +382,383 @@ select {
 .empty {
   border-color: #b5c5b0;
 }
+/* The characters react to the most recent guess. */
+:root {
+  background: #fff5df;
+  color: #292749;
+}
+body {
+  background: #fff5df;
+}
+.app {
+  max-width: 1100px;
+  padding-bottom: 65px;
+}
+.masthead {
+  height: 58px;
+  border-color: #e8c8a4;
+}
+.brand {
+  color: #5d397b;
+}
+.brand::before {
+  color: #ef805b;
+}
+.edition {
+  color: #795b75;
+}
+.mascots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 7vw, 90px);
+  overflow: hidden;
+  padding: 14px 20px 12px;
+  background: #ffd86d;
+  border: 2px solid #342f50;
+  border-radius: 18px;
+  margin-top: 18px;
+}
+.mascots::before,
+.mascots::after {
+  content: "✦";
+  position: absolute;
+  color: #f0705c;
+  font-size: 35px;
+  animation: twinkle 3s ease-in-out infinite;
+}
+.mascots::before {
+  left: 9%;
+  top: 20%;
+}
+.mascots::after {
+  right: 10%;
+  bottom: 23%;
+  animation-delay: 1s;
+}
+.mascot {
+  width: clamp(115px, 20vw, 210px);
+  text-align: center;
+  position: relative;
+}
+.mascot img {
+  display: block;
+  width: 100%;
+  height: clamp(100px, 16vw, 165px);
+  object-fit: contain;
+  transform-origin: 50% 90%;
+  animation: bob 4s ease-in-out infinite;
+}
+.cow img {
+  animation-delay: -0.9s;
+}
+.mascot-caption {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  background: #fff8e9;
+  border: 2px solid #342f50;
+  border-radius: 999px;
+  font:
+    700 12px "DM Mono",
+    monospace;
+  box-shadow: 3px 3px #342f50;
+}
+.mascot-caption span {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  color: white;
+  border-radius: 50%;
+  background: #e7674f;
+}
+.cow .mascot-caption span {
+  background: #8759b3;
+}
+.bull.react img {
+  animation: bull-hop 0.8s ease both;
+}
+.cow.react img {
+  animation: cow-dance 0.85s ease both;
+}
+.celebration .mascot img {
+  animation: celebrate 0.7s ease-in-out 3 alternate;
+}
+.celebration::before,
+.celebration::after {
+  animation: confetti 0.9s ease-in-out infinite alternate;
+}
+.rules {
+  margin-top: 16px;
+  border-color: #e8c8a4;
+}
+.rules-title,
+.section-index {
+  color: #bd4e36;
+}
+.board {
+  margin-top: 20px;
+}
+.card {
+  background: #fffdfa;
+  border: 2px solid #342f50;
+  box-shadow: 5px 5px #e9bfa2;
+  animation: arrive 0.45s ease both;
+}
+.scores {
+  background: #e6dcfa;
+  box-shadow: 5px 5px #b9a7d0;
+  animation-delay: 0.1s;
+}
+h2 {
+  color: #342f50;
+}
+button {
+  background: #e86246;
+  border: 2px solid #342f50;
+  color: #fff;
+  box-shadow: 3px 3px #342f50;
+  transition:
+    transform 0.16s,
+    box-shadow 0.16s,
+    background 0.16s;
+}
+button::after {
+  content: "→";
+}
+button:hover {
+  background: #f17e5a;
+  border-color: #342f50;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px #342f50;
+}
+button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 #342f50;
+}
+.secondary {
+  background: #fff7e8;
+  color: #342f50;
+}
+.secondary:hover {
+  background: #f8d56c;
+  color: #342f50;
+}
+input,
+select {
+  background: white;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+input:focus,
+select:focus {
+  border-color: #a15bbd;
+  box-shadow: 0 0 0 4px #e7d8f8;
+}
+.invalid {
+  animation: shake 0.35s ease;
+}
+.error {
+  color: #ba342d;
+}
+.history li:last-child {
+  animation: slide-in 0.4s ease both;
+}
+.success {
+  color: #277a53;
+  animation: success-pop 0.5s ease both;
+}
+.empty {
+  border-color: #bda9d2;
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(2deg);
+  }
+}
+@keyframes bull-hop {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  30% {
+    transform: translateY(-24px) rotate(-9deg);
+  }
+  65% {
+    transform: translateY(-8px) rotate(7deg);
+  }
+}
+@keyframes cow-dance {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(12deg) translateY(-8px);
+  }
+  55% {
+    transform: rotate(-12deg);
+  }
+  80% {
+    transform: rotate(6deg);
+  }
+}
+@keyframes celebrate {
+  from {
+    transform: translateY(0) rotate(-8deg) scale(1);
+  }
+  to {
+    transform: translateY(-20px) rotate(8deg) scale(1.08);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: rotate(0) scale(0.8);
+    opacity: 0.55;
+  }
+  50% {
+    transform: rotate(40deg) scale(1.2);
+    opacity: 1;
+  }
+}
+@keyframes confetti {
+  from {
+    transform: translateY(0) rotate(0);
+  }
+  to {
+    transform: translateY(-20px) rotate(100deg) scale(1.4);
+  }
+}
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+@keyframes success-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+@media (max-width: 700px) {
+  .masthead {
+    height: 55px;
+  }
+  .mascots {
+    padding: 8px 12px 12px;
+  }
+  .mascot img {
+    height: 110px;
+  }
+  .mascots::before,
+  .mascots::after {
+    font-size: 24px;
+  }
+  .rules {
+    gap: 6px;
+  }
+  .card {
+    padding: 22px;
+  }
+}
+.app {
+  padding-top: 20px;
+}
+.rules {
+  margin-top: 0;
+  padding: 12px 0;
+}
+.board {
+  align-items: start;
+}
+.sidebar {
+  display: grid;
+  gap: 16px;
+}
+.mascots {
+  margin: 0;
+  gap: 12px;
+  padding: 12px 8px;
+}
+.mascot {
+  width: min(45%, 155px);
+}
+.mascot img {
+  height: 125px;
+}
+@media (max-width: 700px) {
+  .board {
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar {
+    display: contents;
+  }
+  .mascots {
+    order: -1;
+    width: 100%;
+  }
+  .board > .card,
+  .scores {
+    width: 100%;
+  }
+  .rules {
+    grid-template-columns: 1fr 1fr;
+    font-size: 12px;
+  }
+  .rules-title {
+    grid-column: 1 / -1;
+  }
+  .mascot img {
+    height: 80px;
+  }
+}

@@ -55,33 +55,47 @@ const button = (text: string): HTMLButtonElement => {
 };
 function render(): void {
   app.replaceChildren();
-  const masthead = element("header", undefined, "masthead");
-  masthead.append(
-    element("span", "БЫКИ И КОРОВЫ", "brand"),
-    element("span", "Игра на сообразительность", "edition"),
+  const lastGuess = game?.history[game.history.length - 1];
+  const mascots = element(
+    "div",
+    undefined,
+    `mascots${game?.won ? " celebration" : ""}`,
   );
-  const hero = element("div", undefined, "hero");
-  const heroCopy = element("div", undefined, "hero-copy");
-  heroCopy.append(
-    element("p", "СЫГРАЕМ?", "eyebrow"),
-    element("h1", "Быки и коровы"),
-    element(
-      "p",
-      "Загадано число с неповторяющимися цифрами. Попробуйте угадать его за как можно меньше попыток.",
-      "intro",
-    ),
+  const mascot = (
+    name: string,
+    label: string,
+    count: number,
+    reaction: boolean,
+  ): HTMLElement => {
+    const character = element(
+      "div",
+      undefined,
+      `mascot ${name}${reaction ? " react" : ""}`,
+    );
+    const picture = element("img");
+    picture.src = `./assets/${name}.png`;
+    picture.alt = "";
+    picture.draggable = false;
+    const caption = element("div", undefined, "mascot-caption");
+    caption.append(
+      element("strong", label),
+      element("span", game?.history.length ? String(count) : "?"),
+    );
+    character.append(picture, caption);
+    return character;
+  };
+  mascots.append(
+    mascot("bull", "БЫКИ", lastGuess?.bulls ?? 0, Boolean(lastGuess?.bulls)),
+    mascot("cow", "КОРОВЫ", lastGuess?.cows ?? 0, Boolean(lastGuess?.cows)),
   );
-  const symbol = element("div", undefined, "hero-symbol");
-  symbol.setAttribute("aria-hidden", "true");
-  symbol.append(element("span", "?"), element("small", "ЧТО ЗАГАДАНО?"));
-  hero.append(heroCopy, symbol);
+  mascots.setAttribute("aria-label", "Результат последней попытки");
   const rules = element("aside", undefined, "rules");
   rules.append(
     element("span", "КАК ИГРАТЬ", "rules-title"),
     element("p", "Бык — цифра на своём месте."),
     element("p", "Корова — верная цифра, но не на своём месте."),
   );
-  app.append(masthead, hero, rules);
+  app.append(rules);
   const board = element("div", undefined, "board");
   app.append(board);
   const card = element("section", undefined, "card");
@@ -188,10 +202,16 @@ function render(): void {
         const value = input.value.toLowerCase();
         if (!isValidGuess(value, current.length, current.base)) {
           error.textContent = `Введите ${current.length} разных допустимых цифр.`;
+          form.classList.remove("invalid");
+          void form.offsetWidth;
+          form.classList.add("invalid");
           return;
         }
         if (current.history.some((entry) => entry.value === value)) {
           error.textContent = "Эта попытка уже была.";
+          form.classList.remove("invalid");
+          void form.offsetWidth;
+          form.classList.add("invalid");
           return;
         }
         const result = evaluateGuess(current.secret, value);
@@ -264,6 +284,8 @@ function render(): void {
     });
     scores.append(list);
   }
-  board.append(scores);
+  const sidebar = element("div", undefined, "sidebar");
+  sidebar.append(mascots, scores);
+  board.append(sidebar);
 }
 render();
