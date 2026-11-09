@@ -317,3 +317,68 @@ select:focus-visible {
     margin-top: 5px;
   }
 }
+/* A quieter palette and softer edges keep the focus on the game. */
+:root {
+  background: #f7f3eb;
+  color: #29332d;
+}
+body {
+  background-image: none;
+}
+.masthead,
+.rules {
+  border-color: #c9d0c4;
+}
+.brand::before {
+  color: #c5724b;
+}
+.hero {
+  padding-top: 55px;
+  padding-bottom: 42px;
+}
+h1 {
+  letter-spacing: -0.065em;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+}
+.hero-symbol {
+  background: #e6b185;
+  border-color: #ad785c;
+  transform: rotate(6deg);
+}
+.hero-symbol span {
+  color: #44392f;
+}
+.eyebrow,
+.section-index,
+.rules-title {
+  color: #9a533a;
+}
+.card {
+  background: #fffdfa;
+  border-color: #d6ddd2;
+  border-radius: 14px;
+}
+.scores {
+  background: #e7eee2;
+}
+button {
+  background: #425f4e;
+  border-color: #425f4e;
+  border-radius: 6px;
+}
+button:hover {
+  background: #304b3c;
+  border-color: #304b3c;
+}
+input,
+select {
+  border-color: #bac6b8;
+  border-radius: 6px;
+}
+.secondary {
+  background: transparent;
+  color: #425f4e;
+}
+.empty {
+  border-color: #b5c5b0;
+}

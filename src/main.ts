@@ -57,23 +57,23 @@ function render(): void {
   app.replaceChildren();
   const masthead = element("header", undefined, "masthead");
   masthead.append(
-    element("span", "ЛОГИЧЕСКИЙ КЛУБ", "brand"),
-    element("span", "ВЫПУСК № 01 / ИГРА НА ДЕДУКЦИЮ", "edition"),
+    element("span", "БЫКИ И КОРОВЫ", "brand"),
+    element("span", "Игра на сообразительность", "edition"),
   );
   const hero = element("div", undefined, "hero");
   const heroCopy = element("div", undefined, "hero-copy");
   heroCopy.append(
-    element("p", "ЗАДАЧА № 001", "eyebrow"),
-    element("h1", "Быки & коровы"),
+    element("p", "СЫГРАЕМ?", "eyebrow"),
+    element("h1", "Быки и коровы"),
     element(
       "p",
-      "Одна тайная комбинация. Несколько точных догадок. Сколько попыток понадобится вам?",
+      "Загадано число с неповторяющимися цифрами. Попробуйте угадать его за как можно меньше попыток.",
       "intro",
     ),
   );
   const symbol = element("div", undefined, "hero-symbol");
   symbol.setAttribute("aria-hidden", "true");
-  symbol.append(element("span", "?"), element("small", "СЕКРЕТНОЕ ЧИСЛО"));
+  symbol.append(element("span", "?"), element("small", "ЧТО ЗАГАДАНО?"));
   hero.append(heroCopy, symbol);
   const rules = element("aside", undefined, "rules");
   rules.append(
@@ -88,7 +88,7 @@ function render(): void {
   board.append(card);
   if (!game) {
     card.append(
-      element("p", "01 / НАСТРОЙКА РАУНДА", "section-index"),
+      element("p", "НАЧНЁМ С НАСТРОЕК", "section-index"),
       element("h2", "Новая игра"),
       element("p", "Выберите параметры секретного числа.", "muted"),
     );
@@ -148,7 +148,7 @@ function render(): void {
   } else {
     const current = game;
     card.append(
-      element("p", "01 / ИГРОВОЙ РАУНД", "section-index"),
+      element("p", "ИГРАЕМ", "section-index"),
       element("h2", current.won ? "Вы угадали!" : "Ваша попытка"),
       element(
         "p",
@@ -244,7 +244,7 @@ function render(): void {
   }
   const scores = element("section", undefined, "card scores");
   scores.append(
-    element("p", "02 / ЗАЛ СЛАВЫ", "section-index"),
+    element("p", "ЛУЧШИЕ РЕЗУЛЬТАТЫ", "section-index"),
     element("h2", "Рекорды"),
     element("p", "Лучшие результаты по числу попыток и времени.", "muted"),
   );
