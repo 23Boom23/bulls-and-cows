@@ -762,3 +762,12 @@ select:focus {
     height: 80px;
   }
 }
+
+@media (min-width: 701px) {
+  .board {
+    align-items: stretch;
+  }
+  .sidebar {
+    grid-template-rows: auto 1fr;
+  }
+}
