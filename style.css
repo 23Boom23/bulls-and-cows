@@ -1,0 +1,138 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #24342c;
+  background: #f3f6ed;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 20px 80px;
+}
+.eyebrow {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: #638356;
+}
+h1 {
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin: 14px 0;
+}
+h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+h3 {
+  margin-top: 28px;
+}
+.intro {
+  max-width: 580px;
+  line-height: 1.6;
+  color: #58685d;
+  margin-bottom: 30px;
+}
+.card {
+  background: #fff;
+  border: 1px solid #e0e8d9;
+  border-radius: 20px;
+  padding: 28px;
+  margin: 16px 0;
+  box-shadow: 0 10px 35px #344f2610;
+}
+.muted {
+  color: #6c7b6e;
+  line-height: 1.5;
+}
+form {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+label {
+  display: grid;
+  gap: 8px;
+  font-weight: 650;
+}
+input,
+select,
+button {
+  font: inherit;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+input,
+select {
+  width: 100%;
+  border: 1px solid #cbd7c7;
+  background: #fafcf8;
+  color: inherit;
+}
+button {
+  border: 0;
+  background: #326b48;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+button:hover {
+  background: #24563a;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #93bd83;
+  outline-offset: 2px;
+}
+.secondary {
+  color: #326b48;
+  background: #edf5e9;
+  margin-top: 20px;
+}
+.secondary:hover {
+  background: #dcecd8;
+}
+.history {
+  padding-left: 25px;
+}
+.history li {
+  padding: 12px 4px;
+  border-bottom: 1px solid #edf1ea;
+}
+.history li span {
+  float: right;
+  color: #6c7b6e;
+}
+.error {
+  color: #a52a32;
+  margin: 0;
+  min-height: 1em;
+}
+.success {
+  color: #326b48;
+  font-weight: 700;
+}
+.empty {
+  padding: 16px;
+  background: #f7faf5;
+  border-radius: 10px;
+  color: #70806f;
+}
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+  .history li span {
+    display: block;
+    float: none;
+    margin-top: 4px;
+  }
+}
