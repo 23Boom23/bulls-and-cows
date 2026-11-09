@@ -771,3 +771,14 @@ select:focus {
     grid-template-rows: auto 1fr;
   }
 }
+.mascot-description {
+  margin: 10px auto 2px;
+  max-width: 150px;
+  color: #403950;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.section-index,
+label {
+  font-size: 13px;
+}

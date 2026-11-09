@@ -1,4 +1,5 @@
-import { createDigitValidator } from "./digit.js";
+import { createDigitValidator, DIGITS } from "./digit.js";
+import { countLabel } from "./words.js";
 import { isValidGuess } from "./valid.js";
 import { evaluateGuess } from "./evaluate.js";
 import { generateSecret } from "./secret.js";
@@ -19,6 +20,8 @@ type Game = {
   history: Guess[];
   won: boolean;
 };
+const attemptForms = { one: "попытка", few: "попытки", many: "попыток" };
+const digitForms = { one: "цифра", few: "цифры", many: "цифр" };
 const storageKey = "bulls-and-cows-records";
 let game: Game | null = null;
 let records: RecordEntry[] = [];
@@ -66,6 +69,7 @@ function render(): void {
     label: string,
     count: number,
     reaction: boolean,
+    description: string,
   ): HTMLElement => {
     const character = element(
       "div",
@@ -73,7 +77,7 @@ function render(): void {
       `mascot ${name}${reaction ? " react" : ""}`,
     );
     const picture = element("img");
-    picture.src = `./assets/${name}.png`;
+    picture.src = `./assets/${name}.webp`;
     picture.alt = "";
     picture.draggable = false;
     const caption = element("div", undefined, "mascot-caption");
@@ -81,21 +85,30 @@ function render(): void {
       element("strong", label),
       element("span", game?.history.length ? String(count) : "?"),
     );
-    character.append(picture, caption);
+    character.append(
+      picture,
+      caption,
+      element("p", description, "mascot-description"),
+    );
     return character;
   };
   mascots.append(
-    mascot("bull", "БЫКИ", lastGuess?.bulls ?? 0, Boolean(lastGuess?.bulls)),
-    mascot("cow", "КОРОВЫ", lastGuess?.cows ?? 0, Boolean(lastGuess?.cows)),
+    mascot(
+      "bull",
+      "БЫКИ",
+      lastGuess?.bulls ?? 0,
+      Boolean(lastGuess?.bulls),
+      "Цифра на своём месте",
+    ),
+    mascot(
+      "cow",
+      "КОРОВЫ",
+      lastGuess?.cows ?? 0,
+      Boolean(lastGuess?.cows),
+      "Верная цифра, но на другом месте",
+    ),
   );
   mascots.setAttribute("aria-label", "Результат последней попытки");
-  const rules = element("aside", undefined, "rules");
-  rules.append(
-    element("span", "КАК ИГРАТЬ", "rules-title"),
-    element("p", "Бык — цифра на своём месте."),
-    element("p", "Корова — верная цифра, но не на своём месте."),
-  );
-  app.append(rules);
   const board = element("div", undefined, "board");
   app.append(board);
   const card = element("section", undefined, "card");
@@ -166,7 +179,7 @@ function render(): void {
       element("h2", current.won ? "Вы угадали!" : "Ваша попытка"),
       element(
         "p",
-        `${current.length} цифры · основание ${current.base}`,
+        `${countLabel(current.length, digitForms)} · основание ${current.base}`,
         "muted",
       ),
     );
@@ -174,7 +187,7 @@ function render(): void {
       card.append(
         element(
           "p",
-          `Число ${current.secret.toUpperCase()} угадано за ${current.history.length} попыток.`,
+          `Число ${current.secret.toUpperCase()} угадано за ${countLabel(current.history.length, { ...attemptForms, one: "попытку" })}.`,
           "success",
         ),
       );
@@ -184,14 +197,17 @@ function render(): void {
       const input = element("input");
       input.autocomplete = "off";
       input.maxLength = current.length;
-      input.placeholder = "Например, 0123";
+      input.placeholder = `Например, ${DIGITS.slice(0, current.length).toUpperCase()}`;
+      input.setAttribute("aria-describedby", "guess-error");
       const error = element("p", "", "error");
+      error.id = "guess-error";
       error.setAttribute("role", "alert");
       input.addEventListener("input", () => {
         input.value = [...input.value]
           .filter(createDigitValidator(current.base))
           .join("");
         error.textContent = "";
+        input.removeAttribute("aria-invalid");
       });
       label.append(input);
       const submit = element("button", "Проверить");
@@ -201,7 +217,8 @@ function render(): void {
         event.preventDefault();
         const value = input.value.toLowerCase();
         if (!isValidGuess(value, current.length, current.base)) {
-          error.textContent = `Введите ${current.length} разных допустимых цифр.`;
+          error.textContent = `Введите ${countLabel(current.length, { one: "разную допустимую цифру", few: "разные допустимые цифры", many: "разных допустимых цифр" })}.`;
+          input.setAttribute("aria-invalid", "true");
           form.classList.remove("invalid");
           void form.offsetWidth;
           form.classList.add("invalid");
@@ -209,6 +226,7 @@ function render(): void {
         }
         if (current.history.some((entry) => entry.value === value)) {
           error.textContent = "Эта попытка уже была.";
+          input.setAttribute("aria-invalid", "true");
           form.classList.remove("invalid");
           void form.offsetWidth;
           form.classList.add("invalid");
@@ -277,8 +295,14 @@ function render(): void {
     records.forEach((record) => {
       const row = element("li");
       row.append(
-        element("strong", `${record.attempts} попыток · ${record.seconds} с`),
-        element("span", `${record.length} цифр · основание ${record.base}`),
+        element(
+          "strong",
+          `${countLabel(record.attempts, attemptForms)} · ${record.seconds} с`,
+        ),
+        element(
+          "span",
+          `${countLabel(record.length, digitForms)} · основание ${record.base}`,
+        ),
       );
       list.append(row);
     });
