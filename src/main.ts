@@ -55,19 +55,40 @@ const button = (text: string): HTMLButtonElement => {
 };
 function render(): void {
   app.replaceChildren();
-  app.append(
-    element("p", "ИГРА НА ЛОГИКУ", "eyebrow"),
-    element("h1", "Быки и коровы"),
+  const masthead = element("header", undefined, "masthead");
+  masthead.append(
+    element("span", "ЛОГИЧЕСКИЙ КЛУБ", "brand"),
+    element("span", "ВЫПУСК № 01 / ИГРА НА ДЕДУКЦИЮ", "edition"),
+  );
+  const hero = element("div", undefined, "hero");
+  const heroCopy = element("div", undefined, "hero-copy");
+  heroCopy.append(
+    element("p", "ЗАДАЧА № 001", "eyebrow"),
+    element("h1", "Быки & коровы"),
     element(
       "p",
-      "Угадайте число из неповторяющихся цифр. Бык — цифра на своём месте, корова — на другом.",
+      "Одна тайная комбинация. Несколько точных догадок. Сколько попыток понадобится вам?",
       "intro",
     ),
   );
+  const symbol = element("div", undefined, "hero-symbol");
+  symbol.setAttribute("aria-hidden", "true");
+  symbol.append(element("span", "?"), element("small", "СЕКРЕТНОЕ ЧИСЛО"));
+  hero.append(heroCopy, symbol);
+  const rules = element("aside", undefined, "rules");
+  rules.append(
+    element("span", "КАК ИГРАТЬ", "rules-title"),
+    element("p", "Бык — цифра на своём месте."),
+    element("p", "Корова — верная цифра, но не на своём месте."),
+  );
+  app.append(masthead, hero, rules);
+  const board = element("div", undefined, "board");
+  app.append(board);
   const card = element("section", undefined, "card");
-  app.append(card);
+  board.append(card);
   if (!game) {
     card.append(
+      element("p", "01 / НАСТРОЙКА РАУНДА", "section-index"),
       element("h2", "Новая игра"),
       element("p", "Выберите параметры секретного числа.", "muted"),
     );
@@ -127,6 +148,7 @@ function render(): void {
   } else {
     const current = game;
     card.append(
+      element("p", "01 / ИГРОВОЙ РАУНД", "section-index"),
       element("h2", current.won ? "Вы угадали!" : "Ваша попытка"),
       element(
         "p",
@@ -220,8 +242,9 @@ function render(): void {
     });
     card.append(reset);
   }
-  const scores = element("section", undefined, "card");
+  const scores = element("section", undefined, "card scores");
   scores.append(
+    element("p", "02 / ЗАЛ СЛАВЫ", "section-index"),
     element("h2", "Рекорды"),
     element("p", "Лучшие результаты по числу попыток и времени.", "muted"),
   );
@@ -241,6 +264,6 @@ function render(): void {
     });
     scores.append(list);
   }
-  app.append(scores);
+  board.append(scores);
 }
 render();
