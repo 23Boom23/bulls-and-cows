@@ -317,7 +317,6 @@ select:focus-visible {
     margin-top: 5px;
   }
 }
-/* A quieter palette and softer edges keep the focus on the game. */
 :root {
   background: #f7f3eb;
   color: #29332d;
@@ -382,7 +381,6 @@ select {
 .empty {
   border-color: #b5c5b0;
 }
-/* The characters react to the most recent guess. */
 :root {
   background: #fff5df;
   color: #292749;
