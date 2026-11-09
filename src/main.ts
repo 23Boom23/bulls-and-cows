@@ -122,13 +122,14 @@ function render(): void {
     const form = element("form");
     const baseLabel = element("label", "Система счисления");
     const base = element("select");
-    [
+    const bases: [number, string][] = [
       [2, "Двоичная · 0–1"],
       [8, "Восьмеричная · 0–7"],
       [10, "Десятичная · 0–9"],
       [16, "Шестнадцатеричная · 0–9, A–F"],
-    ].forEach(([value, title]) => {
-      const option = element("option", String(title));
+    ];
+    bases.forEach(([value, title]) => {
+      const option = element("option", title);
       option.value = String(value);
       option.selected = value === 10;
       base.append(option);
@@ -145,11 +146,12 @@ function render(): void {
     lengthLabel.append(length);
     const combinations = element("p", "", "muted");
     const update = (): void => {
+      const radix = Number(base.value);
       Array.from(length.options).forEach((option) => {
-        option.disabled = Number(option.value) > Number(base.value);
+        option.disabled = Number(option.value) > radix;
       });
-      if (Number(length.value) > Number(base.value)) length.value = "2";
-      combinations.textContent = `Возможных чисел: ${countPossibleSecrets(Number(length.value), Number(base.value)).toLocaleString("ru-RU")}`;
+      if (Number(length.value) > radix) length.value = "2";
+      combinations.textContent = `Возможных чисел: ${countPossibleSecrets(Number(length.value), radix).toLocaleString("ru-RU")}`;
     };
     base.addEventListener("change", update);
     length.addEventListener("change", update);
